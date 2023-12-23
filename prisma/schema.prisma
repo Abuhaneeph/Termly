@@ -1,0 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// mysql://eduowrav_termlyAdmin:;Vw=%G&cV-sJ@localhost:3306/eduowrav_termly
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root@localhost:3306/termly"
+}
+
+
+model User{
+  id Int @id default(autoincrement())
+
+  
+}
+
+

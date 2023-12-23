@@ -1,95 +1,68 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client"
+import { useEffect,useRef ,useState} from 'react'
 
 export default function Home() {
+  
+ 
+
+ 
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+<>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+<div className='w3-container' id="About" style={{  paddingTop: '80px' }}>
+  <div className='w3-row-padding '>
+    <div className='w3-half w3-text-white w3-center'  >
+      
+      <p style={{fontWeight:"bolder",fontSize:"20px"}} className='w3-bold'>At termly <br></br>all institutional and<br></br> Individual financial<br></br> goals are achieved <br></br>within the targeted<br></br> time.
+</p>
+      <p style={{fontWeight:"bolder",fontSize:"20px"}}>Join Us.</p>
+         
+    </div>
+    <div className='w3-half w3-container'>
+      <div className='w3-card-4 w3-white' style={{borderRadius:"40px 0 40px 0"}}>
+    <form className="form-signin" style={{paddingTop:"60px"}}>
+  
+  <div className="form-label-group">
+    <input
+      type="email"
+      id="inputEmail"
+      className="form-control"
+      placeholder="Email address"
+      required=""
+      autofocus=""
+    />
+    <label htmlFor="inputEmail">Email address</label>
+  </div>
+  <div className="form-label-group">
+    <input
+      type="password"
+      id="inputPassword"
+      className="form-control"
+      placeholder="Password"
+      required=""
+    />
+    <label htmlFor="inputPassword">Password</label>
+  </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+  <button className="btn btn-lg btn-primary btn-block" type="submit">
+    Login in
+  </button>
+  <a href="#" className='w3-right'>Forgot Password</a>
+  <p className='mt-5 mb-3 w3-center'>Don&apos;t have an account</p>
+  <button className="btn btn-lg btn-primary btn-block" type="submit">
+    Sign up
+  </button>
+</form>
+</div>
+  
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+
+    </div>
+  </div>
+</div>
+
+</>
   )
 }
