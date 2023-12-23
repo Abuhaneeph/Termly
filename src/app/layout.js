@@ -33,8 +33,7 @@ export default function RootLayout({ children }) {
       <Header/>
       <Footer/>
         {children}
-        <Script src="/node_modules/jquery/dist/jquery.js" />
-<Script src="/node_modules/owl.carousel/dist/owl.carousel.min.js" />
+      
         </body>
     </html>
   )
