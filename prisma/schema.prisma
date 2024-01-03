@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-// mysql://eduowrav_termlyAdmin:;Vw=%G&cV-sJ@localhost:3306/eduowrav_termly
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,11 +7,14 @@ datasource db {
   url      = "mysql://root@localhost:3306/termly"
 }
 
-
-model User{
-  id Int @id default(autoincrement())
-
-  
+model users {
+  user_id           Int     @id @default(autoincrement())
+  email             String  @db.VarChar(200)
+  password          String  @db.VarChar(200)
+  verification_code Int?
+  state             String  @db.VarChar(200)
+  first_name        String  @db.VarChar(200)
+  middle_name       String? @db.VarChar(200)
+  last_name         String  @db.VarChar(200)
+  organization      String? @db.VarChar(200)
 }
-
-

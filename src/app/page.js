@@ -1,6 +1,7 @@
 "use client"
 import { useEffect,useRef ,useState} from 'react'
-
+import Link from 'next/link'
+import prisma from '../../db'
 export default function Home() {
   
  
@@ -50,9 +51,11 @@ export default function Home() {
   </button>
   <a href="#" className='w3-right'>Forgot Password</a>
   <p className='mt-5 mb-3 w3-center'>Don&apos;t have an account</p>
+  <Link href="/user/register">
   <button className="btn btn-lg btn-primary btn-block" type="submit">
     Sign up
   </button>
+  </Link>
 </form>
 </div>
   
