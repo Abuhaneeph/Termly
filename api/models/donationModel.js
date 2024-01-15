@@ -33,10 +33,10 @@ const getDonations = async (page, pageSize) => {
 
     const query = `
       SELECT * FROM donation
-      LIMIT ? OFFSET ?
+      LIMIT ${pageSize} OFFSET ${offset}
     `;
 
-    const [donations] = await db.execute(query, [pageSize, offset]);
+    const [donations] = await db.execute(query);
 
     return donations;
   } catch (error) {
@@ -44,6 +44,9 @@ const getDonations = async (page, pageSize) => {
     throw new Error('Internal Server Error');
   }
 };
+
+
+
 const getDonationCount = async () => {
   try {
     const query = 'SELECT COUNT(*) as totalDonations FROM donation';
@@ -155,7 +158,82 @@ const updateAmountRaised = async (donationId, newAmountRaised) => {
   }
 };
 
+const updateStatistics = async (termlyId, newData) => {
+  try {
+    // Query to get the previous values
+    const selectQuery = `
+      SELECT wallet_balance, donors, donor_balance
+      FROM termly_data
+      WHERE termly_id = ?;
+    `;
+
+    const [previousValues] = await db.query(selectQuery, [termlyId]);
+
+    if (!previousValues.length) {
+      throw new Error('Termly data not found');
+    }
+
+    // Extracting the previous values from the result
+    const { wallet_balance: prevWalletBalance, donors: prevDonors, donor_balance: prevDonorBalance } = previousValues[0];
+
+    // Calculating the new values by adding the recent values to the previous values
+    const updatedWalletBalance = prevWalletBalance + newData.wallet_balance;
+    const updatedDonors = prevDonors + newData.donors;
+    const updatedDonorBalance = prevDonorBalance + newData.donor_balance;
+
+    // Query to update the values in the table where termly_id is 1
+    const updateQuery = `
+      UPDATE termly_data
+      SET wallet_balance = ?,
+          donors = ?,
+          donor_balance = ?
+      WHERE termly_id = ?;
+    `;
+
+    const updateValues = [
+      updatedWalletBalance,
+      updatedDonors,
+      updatedDonorBalance,
+      termlyId,
+    ];
+
+    const [result] = await db.query(updateQuery, updateValues);
+
+    return { success: true, message: 'Statistics updated successfully' };
+  } catch (error) {
+    console.error('Error updating statistics:', error);
+    throw error;
+  }
+};
+const getStatistics = async () => {
+  try {
+    // Example query to get wallet balance, total donation, and number of donors where termly_id is 1
+    const selectQuery = `
+      SELECT 
+        SUM(wallet_balance) AS total_wallet_balance,
+        SUM(donors) AS total_donors,
+        SUM(donor_balance) AS total_donation
+      FROM termly_data
+      WHERE termly_id = 1;
+    `;
+
+    const [result] = await db.query(selectQuery);
+
+    if (!result.length) {
+      throw new Error('No statistics found for termly_id 1');
+    }
+
+    // Extracting the values from the result
+    const { total_wallet_balance, total_donors, total_donation } = result[0];
+
+    return { total_wallet_balance, total_donors, total_donation };
+  } catch (error) {
+    console.error('Error getting statistics:', error);
+    throw error;
+  }
+};
+
 module.exports = {
   createDonation,getDonations,getDonationCount,getDonationById,updateDonationById
-  ,updateAmountRaised
+  ,updateAmountRaised,updateStatistics,getStatistics
 };

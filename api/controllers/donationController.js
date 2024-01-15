@@ -1,49 +1,24 @@
-const multer = require('multer');
+require('dotenv').config();
+
 const donationModel = require('../models/donationModel');
 
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '../public/donation_posters'); // Assuming you have a directory named 'uploads'
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname); // Use the original filename without any modifications
-  },
-});
-
-const upload = multer({ storage: storage });
-
-// Middleware to handle file upload
-const uploadFileMiddleware = upload.single('donation_poster');
-
 const createDonationController = async (req, res) => {
   try {
-    // Use the multer middleware to handle the file upload
-    uploadFileMiddleware(req, res, async (err) => {
-      if (err) {
-        console.error('File Upload Error:', err);
-        return res.status(500).json({ error: 'File Upload Error' });
-      }
+    // Extract donation data from the request body
+    const donationData = req.body;
 
-      // Extract donation data from the request body
-      const donationData = req.body;
+    // Call the model function to create a donation
+    const result = await donationModel.createDonation(donationData);
 
-      // Use the original filename without any modifications
-      donationData.donation_poster = req.file.originalname;
-
-      // Call the model function to create a donation
-      const result = await donationModel.createDonation(donationData);
-
-      // Send a success response with the created donation details
-      res.status(201).json(result);
-    });
+    // Send a success response with the created donation details
+    res.status(201).json(result);
   } catch (error) {
     // Handle errors and send an appropriate error response
     console.error('Controller Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 const getDonationsController = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -116,8 +91,8 @@ const updateAmountRaisedController = async (req, res) => {
 
 
 
-
 module.exports = {
   createDonationController,getDonationsController,getDonationCountController
-  ,getDonationByIdController,updateDonationController,updateAmountRaisedController
+  ,getDonationByIdController,updateDonationController,updateAmountRaisedController,
+  
 };

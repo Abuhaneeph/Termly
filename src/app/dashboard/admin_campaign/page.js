@@ -2,6 +2,7 @@
 import  { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+
 export default function Page() {
   const [donations, setDonations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,7 +14,7 @@ export default function Page() {
     const fetchDonationsAndCount = async () => {
       try {
         // Fetch donations
-        const responseDonations = await fetch(`http://localhost:3000/api/getDonation?page=${currentPage}`);
+        const responseDonations = await fetch(`https://termly-api.onrender.com/api/getDonation?page=${currentPage}`);
         const dataDonations = await responseDonations.json();
 
         // Modify amount_raised to return 0 if null or undefined
@@ -25,7 +26,7 @@ export default function Page() {
         setDonations(modifiedDonations);
 
         // Fetch total donation count
-        const responseCount = await fetch('http://localhost:3000/api/getDonationCount');
+        const responseCount = await fetch('https://termly-api.onrender.com/api/getDonationCount');
         const dataCount = await responseCount.json();
         const totalDonationsCount = dataCount.totalDonations || 0;
         setTotalDonations(totalDonationsCount);
@@ -41,13 +42,15 @@ export default function Page() {
     fetchDonationsAndCount();
   }, [currentPage]);
 
+
+  
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   return (
     <>
-      <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "20px" }} id="donorContent">
+      <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "100px" }} id="donorContent">
         <div className="w3-container">
           <h1>Campaigns</h1>
           <p>All donations made to campaigns are sent directly to the campaign</p>
@@ -58,7 +61,7 @@ export default function Page() {
               <div key={donation.id} className="w3-col l4 m6 w3-margin-top">
                 <div className="w3-padding">
              
-                  <img src={`../../../../donation_posters/${donation.donation_poster}`}alt="Donation" style={{ width: "100%", height: "150px", borderRadius: "20px 20px 0 0" }} />
+                  <img src={`${donation.donation_poster}`}alt="Donation" style={{ width: "100%", height: "150px", borderRadius: "20px 20px 0 0" }} />
                 
                   <div className="w3-container w3-white">
                     <h4><b>{donation.category}</b></h4>

@@ -5,7 +5,7 @@ const routes = require('./routes'); // Import the routes module
 require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // Middleware to parse JSON and URL-encoded data
 app.use(bodyParser.json());

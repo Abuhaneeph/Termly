@@ -36,7 +36,7 @@ export default function Page(){
     const onSuccessEvent = async () => {
       try {
         // Call the API to update the amount raised
-        await axios.put(`http://localhost:3000/api/updateAmountRaised/${id}`, { newAmountRaised: donationGoal });
+        await axios.put(`https://termly-api.onrender.com/api/updateAmountRaised/${id}`, { newAmountRaised: donationGoal });
     
         // Reload the page or update state as needed
         // For simplicity, this example reloads the entire page
@@ -62,7 +62,7 @@ export default function Page(){
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get(`http://localhost:3000/api/getDonationById/${id}`);
+            const response = await axios.get(`https://termly-api.onrender.com/api/getDonationById/${id}`);
             setCampaignData(response.data.donation); // Assuming the API response contains relevant data
             
         } catch (error) {
@@ -88,7 +88,7 @@ export default function Page(){
             <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "20px" }} id="donorContent">
         <div className="w3-container">
           <h1>Campaign Details</h1>
-          <img src={`../../../../donation_posters/${campaignData.donation_poster}`}a width={"100%"} height={"300px"}/>
+          <img src={`${campaignData.donation_poster}`}a width={"100%"} height={"300px"}/>
           <h3>{campaignData.category}</h3>
           <hr></hr>
           <h4>{campaignData.donation_title}</h4>

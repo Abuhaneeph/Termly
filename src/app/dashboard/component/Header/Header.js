@@ -1,5 +1,6 @@
 'use client'
 import { useEffect,useState } from "react";
+import Link from "next/link";
 export default function Header (){
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
@@ -29,7 +30,7 @@ export default function Header (){
   }, []);
     return(
         <>
-       <div className="w3-bar w3-blue w3-hide-small">
+       <div className="w3-bar w3-blue ">
   <div href="#" className="w3-bar-item w3-left w3-button w3-mobile ">
  CGTECH INVESTMENT LIMITED
 
@@ -50,9 +51,10 @@ export default function Header (){
   <div href="#" className="w3-bar-item w3-right w3-button w3-mobile">
   <i class="fa fa-calendar"></i>  {currentDate && currentDate}
   </div>
-
+ 
   
 </div>
+
 
         </>
     )

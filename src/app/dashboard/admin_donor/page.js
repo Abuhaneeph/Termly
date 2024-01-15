@@ -2,6 +2,15 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import {
+  ref,
+  uploadBytesResumable,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "@/hooks/firebase";
 export default function Page(){
   const [formValues, setFormValues] = useState({
     donation_poster: null,
@@ -13,6 +22,7 @@ export default function Page(){
     about: '',
   });
  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -58,25 +68,30 @@ export default function Page(){
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Upload image to Firebase Storage
+    const imageRef = ref(storage, "donation_posters/" + formValues.donation_poster.name);
+   
+  
+    const snapshot = await uploadBytesResumable(imageRef, formValues.donation_poster);
+
+    // Get the download URL after successful upload
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    console.log('File available at', downloadURL);
   
     try {
-      // Create FormData object to send files and other data
-      const formData = new FormData();
-      formData.append("donation_title", formValues.title);
-      formData.append("video_url", formValues.videoUrl);
-      formData.append("category", formValues.category);
-      formData.append("donation_amount", formValues.donationGoal);
-      formData.append("location", formValues.location);
-      formData.append("donation_poster", formValues.donation_poster);
-      formData.append("donation_desc", formValues.about);
-
+      // Create a JSON object with the donation data
+      const donationData = {
+        donation_title: formValues.title,
+        video_url: formValues.videoUrl,
+        category: formValues.category,
+        donation_amount: formValues.donationGoal,
+        location: formValues.location,
+        donation_poster: downloadURL,
+        donation_desc: formValues.about,
+      };
   
       // Make a POST request using Axios
-      const response = await axios.post("http://localhost:3000/api/createDonation", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post("https://termly-api.onrender.com/api/createDonation", donationData);
   
       // Handle the success response
       console.log("API Response:", response.data);
@@ -87,6 +102,7 @@ export default function Page(){
       toast.error("Failed to create donation");
     }
   };
+  
   
   // Function to fetch donation data by ID
 

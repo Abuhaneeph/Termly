@@ -1,0 +1,7 @@
+DB_HOST='localhost'
+DB_USER= 'root'
+DB_PASSWORD=''
+DB_DATABASE='termly'
+SMTP_USER= "termly@payboxed.payboxed.com.ng"
+SMTP_PASSWORD= "}{o~,1W.ZEQv"
+BUCKET_URL="gs://termly-32eec.appspot.com"

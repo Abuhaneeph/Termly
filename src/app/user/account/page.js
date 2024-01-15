@@ -10,6 +10,8 @@ import Profit from '@/component/Profit/Profit';
 import Ngo from '@/component/Ngo/Ngo';
 import Political from '@/component/PoliticalBody/PoliticalBody';
 import Religion from '@/component/ReligionBody/ReligionBody';
+import Govt from '@/component/Govt/Govt';
+import Initiator from '@/component/Initiator/Initiator';
 export default function Page() {
   const searchParams = useSearchParams()
   const [currentModal, setCurrentModal] = useState(1);
@@ -25,9 +27,11 @@ export default function Page() {
       case 'ngo':
         return <Ngo openModal={openModal} closeModal={closeModal} currentModal={currentModal} totalModals={4} email={EmailAddress} />;
       case 'political':
-        return <Political openModal={openModal} closeModal={closeModal} currentModal={currentModal} totalModals={5} email={EmailAddress} />;
+        return <Political openModal={openModal} closeModal={closeModal} currentModal={currentModal} totalModals={4} email={EmailAddress} />;
         case 'religion':
           return <Religion openModal={openModal} closeModal={closeModal} currentModal={currentModal} totalModals={5} email={EmailAddress} />;
+          case 'govt':
+            return <Govt openModal={openModal} closeModal={closeModal} currentModal={currentModal} totalModals={1} email={EmailAddress} />;
       default:
         return null;
     }
@@ -45,7 +49,8 @@ export default function Page() {
   const organizationTypes = [
     { id: 'ngo', label: 'NGO' },
    // { id: 'political', label: 'Political Body' },
-    //{id: 'religion', label: 'Religion Body'},
+    {id: 'religion', label: 'Religion Body'},
+    {id: 'govt', label: 'Govt'},
   ];
 
 

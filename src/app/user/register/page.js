@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import {  toast } from 'react-toastify';
 import axios from 'axios';
-import { hashPassword } from '@/hooks/hashPassword';
+
  import { useRouter } from 'next/navigation'
 
 // ...
@@ -66,11 +66,11 @@ export default function Page() {
     }
     const randomDigits = generateRandomDigits();
 
-  const hashedPassword = await hashPassword(formValues.password)
+ 
  
     const credentials = {
       s_email: formValues.email,
-      s_password: hashedPassword,
+      s_password: formValues.password,
       code: randomDigits,
       s_state: formValues.state,
       f_name: formValues.firstName,
@@ -83,7 +83,7 @@ export default function Page() {
       setRegistering(true);
     
       // Make the POST request to registerOrganisation endpoint
-      const response = await axios.post('http://localhost:3000/api/createUser', credentials);
+      const response = await axios.post('https://termly-api.onrender.com/api/createUser', credentials);
     
       if (response.status === 200) {
         if (response.data.success) {
@@ -91,7 +91,7 @@ export default function Page() {
           toast.success(response.data.message);
     
           // Send verification email
-          const sendEmailResponse = await axios.post('http://localhost:3000/api/sendEmail', {
+          const sendEmailResponse = await axios.post('https://termly-api.onrender.com/api/sendEmail', {
             to: formValues.email,
             verification_code: randomDigits,
           });

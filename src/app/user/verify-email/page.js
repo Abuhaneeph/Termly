@@ -22,7 +22,7 @@ export default function Page() {
 
     try {
       // Call the /verifyEmail API with Axios
-      const response = await axios.post('http://localhost:3000/api/verifyEmail', {
+      const response = await axios.post('https://termly-api.onrender.com/api/verifyEmail', {
         email: EmailAddress,
         verificationCode: verificationCode,
       });
@@ -31,11 +31,11 @@ export default function Page() {
 if (response.data.success) {
   // Email verification successful
   toast.success(response.data.message);
-  router.push(`/user/account?email=${EmailAddress}`);
+  router.push(`/user/accounts?email=${EmailAddress}`);
 } else {
   // Email verification failed
   toast.error(response.data.message);
-  router.push(`/user/account?email=${EmailAddress}`);
+ 
 } 
     } catch (error) {
       // Handle API error

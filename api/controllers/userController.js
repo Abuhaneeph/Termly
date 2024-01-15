@@ -1,3 +1,5 @@
+var bcrypt = require('bcryptjs');
+
 const userModel = require('../models/user');
 
 const createUserController = async (req, res) => {
@@ -19,9 +21,12 @@ const createUserController = async (req, res) => {
     // Check if m_name is an empty string, and set it to null
     const middleNameValue = m_name === '' ? null : m_name;
 
+    // Hash the password before storing it in the database
+    const hashedPassword = await bcrypt.hash(s_password, 10);
+
     const userData = {
       email: s_email,
-      password: s_password,
+      password: hashedPassword,
       verification_code: code,
       state: s_state,
       first_name: f_name,
@@ -44,6 +49,7 @@ const createUserController = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 

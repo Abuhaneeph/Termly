@@ -1,10 +1,10 @@
 // components/Profit/Profit.js
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import Modal1 from './Modal1';
-import Modal2 from './Modal2';
-import Modal3 from './Modal3';
-import Modal4 from './Modal4';
+import Modal1 from './NModal1';
+import Modal2 from './NModal2';
+import Modal3 from './NModal3';
+import Modal4 from './NModal4';
 
 export default function Ngo({ openModal, closeModal, currentModal, totalModals, email }) {
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -19,23 +19,25 @@ export default function Ngo({ openModal, closeModal, currentModal, totalModals, 
     mobileNumber: '',
     aName: '',
     bName: '',
-    bNumber: '',
-  });
-  const [fileValues, setFileValues] = useState({
+    aNumber: '',
     certReg: null,
     certAddr: null,
     certDir: null,
   });
+  useEffect(() => {
+    if (currentModal === 0) {
+      setButtonClicked(false);
+    }
+  }, [currentModal]);
 
-  const handleFileChange = (name, file) => {
-    console.log(`File ${name} received in Ngo:`, file);
-    setFileValues((prevFileValues) => ({
-      ...prevFileValues,
-      [name]: file,
-    }));
+  const handleFileChange = (file) => {
+    console.log('File5 received in Profit:', file);
+    // Handle the file value in the parent component (Profit)
+    // You can perform additional actions here, e.g., displaying a preview or uploading the file
   };
+ 
 
-  const handleOpenModalSequence = () => {
+  const handleOpenModalSequenceNGO = () => {
     openModal(1);
     setButtonClicked(true);
   };
@@ -54,8 +56,8 @@ export default function Ngo({ openModal, closeModal, currentModal, totalModals, 
       case 2:
         return ['name', 'pos', 'address', 'mobileNumber'];
       case 3:
-        return ['certAddr', 'certDir', 'certReg'];
-      
+        return [];
+       
       default:
         return [];
     }
@@ -73,7 +75,11 @@ export default function Ngo({ openModal, closeModal, currentModal, totalModals, 
     });
 
     if (allFieldsHaveValues && currentModal < totalModals) {
-      openModal(currentModal + 1);
+      if (currentModal === 4 && initiatorReg) {
+        openModal(currentModal + 1);
+      } else if (currentModal !== 4) {
+        openModal(currentModal + 1);
+      }
     }
   };
 
@@ -84,9 +90,9 @@ export default function Ngo({ openModal, closeModal, currentModal, totalModals, 
       case 2:
         return <Modal2 values={inputValues} onInputChange={handleInputChange} />;
       case 3:
-        return <Modal3 values={inputValues} onInputChange={handleInputChange} onFileChange={handleFileChange} />;
+        return <Modal3 values={inputValues} onInputChange={handleInputChange} />;
       case 4:
-        return <Modal4 s_email={email} fileValues={fileValues} values={inputValues} onInputChange={handleInputChange} />;
+        return <Modal4 s_email={email}  values={inputValues} onInputChange={handleInputChange} onFileChange={handleFileChange} />;
       default:
         return null;
     }
@@ -125,7 +131,7 @@ export default function Ngo({ openModal, closeModal, currentModal, totalModals, 
 
   return (
     <div>
-      <Button variant="primary" onClick={handleOpenModalSequence}>
+      <Button variant="primary" onClick={handleOpenModalSequenceNGO}>
        Register Now
       </Button>
 

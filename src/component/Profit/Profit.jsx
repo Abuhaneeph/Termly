@@ -1,12 +1,13 @@
 // components/Profit/Profit.js
 'use client'
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import Modal1 from './Modal1';
-import Modal2 from './Modal2';
-import Modal3 from './Modal3';
-import Modal4 from './Modal4'
-import Modal5 from './Modal5'
+import ProfitModalOne from './ProfitModal1';
+import ProfitModalTwo from './ProfitModal2';
+import ProfitModalThree from './ProfitModal3';
+import ProfitModalFour from './ProfitModal4';
+import ProfitModalFive from './ProfitModal5';
+
 
 export default function Profit({ openModal, closeModal, currentModal, totalModals,email }) {
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -39,9 +40,16 @@ export default function Profit({ openModal, closeModal, currentModal, totalModal
     street2: '',
   
   });
-  
+  useEffect(() => {
+    if (currentModal === 0) {
+      setButtonClicked(false);
+    }
+  }, [currentModal]);
 
-  const handleOpenModalSequence = () => {
+  // ... (existing code)
+
+
+  const handleOpenModalSequenceProfit = () => {
     openModal(1);
     setButtonClicked(true);
   };
@@ -82,21 +90,23 @@ export default function Profit({ openModal, closeModal, currentModal, totalModal
   
     if (allFieldsHaveValues && currentModal < totalModals) {
       openModal(currentModal + 1);
+     
     }
   };
+  
 
-  const renderModalContent = (modalNumber) => {
+  const renderModalContentProfit = (modalNumber) => {
     switch (modalNumber) {
       case 1:
-        return <Modal1 values={inputValues} onInputChange={handleInputChange} />;
+        return <ProfitModalOne values={inputValues} onInputChange={handleInputChange} />;
       case 2:
-        return <Modal2 values={inputValues} onInputChange={handleInputChange} />;
+        return <ProfitModalTwo values={inputValues} onInputChange={handleInputChange} />;
         case 3:
-          return  <Modal3 values={inputValues} onInputChange={handleInputChange} />;
+          return  <ProfitModalThree values={inputValues} onInputChange={handleInputChange} />;
           case 4:
-            return <Modal4 values={inputValues} onInputChange={handleInputChange} />;
+            return <ProfitModalFour values={inputValues} onInputChange={handleInputChange} />;
             case 5:
-              return <Modal5 s_email={email} values={inputValues} onInputChange={handleInputChange} onFileChange={handleFileChange} />;
+              return <ProfitModalFive s_email={email} values={inputValues} onInputChange={handleInputChange} onFileChange={handleFileChange} />;
       // Add cases for other modals as needed
       default:
         return null;
@@ -121,7 +131,7 @@ export default function Profit({ openModal, closeModal, currentModal, totalModal
             <Modal.Title>Step {modalNumber}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {renderModalContent(modalNumber)}
+            {renderModalContentProfit(modalNumber)}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={closeModal}>
@@ -144,7 +154,7 @@ export default function Profit({ openModal, closeModal, currentModal, totalModal
   return (
     <div>
       {/* Trigger button to open the first modal */}
-      <Button variant="primary" onClick={handleOpenModalSequence}>
+      <Button variant="primary" onClick={handleOpenModalSequenceProfit}>
        Register Now
       </Button>
 

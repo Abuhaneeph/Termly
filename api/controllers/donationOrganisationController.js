@@ -1,5 +1,5 @@
 // donationOrganisationController.js
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const donationOrganisationModel = require('../models/donationOrganisationModel');
 
 const registerOrganisation = async (req, res) => {

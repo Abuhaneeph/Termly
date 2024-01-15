@@ -3,6 +3,15 @@ import { useState ,useEffect} from "react";
 import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import {
+  ref,
+  uploadBytesResumable,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "@/hooks/firebase";
 export default function Page (){
    
     const searchParams = useSearchParams()
@@ -62,26 +71,31 @@ export default function Page (){
  
   const handleSubmit = async (e) => {
     e.preventDefault();
+   // Upload image to Firebase Storage
+   const imageRef = ref(storage, "donation_posters/" + formValues.donation_poster.name);
+   
   
+   const snapshot = await uploadBytesResumable(imageRef, formValues.donation_poster);
+
+   // Get the download URL after successful upload
+   const downloadURL = await getDownloadURL(snapshot.ref);
   
     try {
       // Create FormData object to send files and other data
-      const formData = new FormData();
-      formData.append("donation_title", formValues.title);
-      formData.append("video_url", formValues.videoUrl);
-      formData.append("category", formValues.category);
-      formData.append("donation_amount", formValues.donationGoal);
-      formData.append("location", formValues.location);
-      formData.append("donation_poster", formValues.donation_poster);
-      formData.append("donation_desc", formValues.about);
+      const donationData = {
+        donation_title: formValues.title,
+        video_url: formValues.videoUrl,
+        category: formValues.category,
+        donation_amount: formValues.donationGoal,
+        location: formValues.location,
+        donation_poster: downloadURL,
+        donation_desc: formValues.about,
+      };
 
   
       // Make a POST request using Axios
-      const response = await axios.put(`http://localhost:3000/api/updateDonationById/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(`https://termly-api.onrender.com/api/updateDonationById/${id}`, donationData
+      );
   
       // Handle the success response
       console.log("API Response:", response.data);
