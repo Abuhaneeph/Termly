@@ -81,7 +81,7 @@ export default function Page(){
                   className="form-check-label"
                   htmlFor="checkAccountGroups"
                 >
-                  Changes are made to groups you're part of
+                  Changes are made to groups you&apos;re  part of
                 </label>
               </div>
               <div className="form-check mb-2">
@@ -95,7 +95,7 @@ export default function Page(){
                   className="form-check-label"
                   htmlFor="checkProductUpdates"
                 >
-                  Product updates for products you've purchased or starred
+                  Product updates for products you&apos;ve purchased or starred
                 </label>
               </div>
               <div className="form-check mb-2">
@@ -208,7 +208,7 @@ export default function Page(){
                   type="checkbox"
                 />
                 <label className="form-check-label" htmlFor="checkSmsGroup">
-                  New posts are made in groups you're part of
+                  New posts are made in groups you&apos;re part of
                 </label>
               </div>
               <div className="form-check">
