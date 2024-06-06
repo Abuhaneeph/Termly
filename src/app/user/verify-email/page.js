@@ -80,10 +80,7 @@ if (response.data.success) {
   <button className="btn btn-lg btn-primary btn-block" type="submit">
     Submit Now
   </button>
-  <div className="w3-panel w3-center">
-  <a href="#" className="w3-padding-top w3-center">Resend Verification Email</a>
-  
-  </div>
+ 
  
 
  

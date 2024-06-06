@@ -1,11 +1,11 @@
 {
-  "name": "cw-portal",
+  "name": "termly",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "nanoid": "^5.0.4",
     "net": "^1.0.2",
     "next": "^14.0.4",
+    "next-auth": "^4.24.7",
     "nodemailer": "^6.9.7",
     "owl.carousel": "^2.3.4",
     "pdfkit": "^0.14.0",
@@ -41,6 +42,7 @@
     "react-paystack": "^4.0.3",
     "react-toastify": "^9.1.3",
     "recharts": "^2.10.3",
+    "sessionstorage": "^0.1.0",
     "swiper": "^11.0.5",
     "uuid-v4": "^0.1.0",
     "yarn": "^1.22.21"

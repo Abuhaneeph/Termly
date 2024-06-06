@@ -1,3 +1,4 @@
+
 import { Inter } from 'next/font/google'
 import './globals.css'
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,6 +7,7 @@ import Footer from '@/component/Footer/Footer'
 import Script from 'next/script'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
+import NextAuthProvider from '@/provider/NexthAuthProvider';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -32,11 +34,13 @@ export default function RootLayout({ children }) {
       
     
       <body className={inter.className} style={{background:  "#FF8C00"}}  >
-      <Header/>
+      <NextAuthProvider>
       <ToastContainer/>
-    
+      <Header/>
         {children}
       <Footer/>
+      </NextAuthProvider>
+   
         </body>
     </html>
   )

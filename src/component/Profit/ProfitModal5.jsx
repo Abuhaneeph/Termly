@@ -12,7 +12,10 @@ import {
   listAll,
   list,
 } from "firebase/storage";
+import { useRouter } from 'next/navigation';
 export default function ProfitModalFive  ({ values, onInputChange, onFileChange ,s_email })  {
+  const router= useRouter()
+  const[isSubmit,setSubmit]=useState(false)
   const [uploadedFiles, setUploadedFiles] = useState({
     certInc: null,
     certMem: null,
@@ -34,6 +37,7 @@ export default function ProfitModalFive  ({ values, onInputChange, onFileChange 
   };
   const handleSubmit = async () => {
     try {
+      setSubmit(true)
       // Check if all files are uploaded
       const allFilesUploaded = Object.values(uploadedFiles).every((file) => file !== null);
   
@@ -98,17 +102,32 @@ export default function ProfitModalFive  ({ values, onInputChange, onFileChange 
           if (registerResponse.status >= 200 && registerResponse.status < 300) {
             toast.success('Profit Organization created successfully');
             console.log('Profit Organization registered successfully:', registerResponse.data);
+            const updateResponse = await axios.put(
+              'https://termly-api.onrender.com/api/updateAccountType',
+              {
+                email: s_email,
+                accountType: 3,
+              }
+            );
+  
+            console.log('Updated account type:', updateResponse.data);
+            setSubmit(false)
+            router.push('/dashboard/home_page');
           } else {
+            setSubmit(false)
             toast.error('Error registering Profit Organization');
             console.error('Error registering Profit Organization:', registerResponse.data.message);
           }
         } else {
+          setSubmit(false)
           console.error('Error fetching user ID:', userData.message);
         }
       } else {
+        setSubmit(false)
         console.error('Please upload all required files.');
       }
     } catch (error) {
+      setSubmit(false)
       console.error('Error:', error.message);
     }
   };
@@ -200,7 +219,7 @@ export default function ProfitModalFive  ({ values, onInputChange, onFileChange 
       
     </div>
     <div className='w3-center'>
-            <Button variant='primary' onClick={handleSubmit}>Submit</Button>
+            <Button variant='primary' onClick={handleSubmit}>{!isSubmit ? 'Submit' : 'Submitting...'}</Button>
       </div>
     </>
   );

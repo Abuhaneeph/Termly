@@ -130,7 +130,59 @@ const getUserIDByEmailController = async (req, res) => {
   }
 };
 
+
+
+const loginUserController = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Check if the user with the given email exists
+    const user = await userModel.getUserByEmail(email);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if the email is verified
+    if (!user.is_verified) {
+      return res.status(400).json({ error: 'Email not verified' });
+    }
+
+    // Compare the hashed password with the provided password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid password' });
+    }
+
+    // Check the account type
+    let accountTypeMessage;
+    switch(user.account_type) {
+      case 0:
+        accountTypeMessage = 'Account type not chosen';
+        break;
+      case 1:
+        accountTypeMessage = 'Initiator';
+        break;
+      case 2:
+        accountTypeMessage = 'Contributor';
+        break;
+        case 3:
+          accountTypeMessage = 'Organization';
+          break;
+    }
+
+    res.json({ message: 'Login successful', account_type: accountTypeMessage });
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+
 module.exports = {
   createUserController,checkUserEmailExistsController,checkUserByEmailAndVerificationCode
-  ,updateUserAccountTypeController,getUserIDByEmailController
+  ,updateUserAccountTypeController,getUserIDByEmailController,loginUserController
 };

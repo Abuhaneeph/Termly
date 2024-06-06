@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+var sessionStorage = require('sessionstorage');
 export default function Page(){
     const initiatorId= sessionStorage.getItem('initiatorID')
   const [formValues, setFormValues] = useState({
@@ -69,7 +70,7 @@ export default function Page(){
 <>
 
 
-<div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh",paddingBottom:"20px" }} id="donorContent">
+<div style={{ marginLeft: "20%", overflowY: "auto", height: "80vh",paddingBottom:"20px" }} id="donorContent">
   <div className="w3-container">
     <h2>Create Donation</h2>
     <form

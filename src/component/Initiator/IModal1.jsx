@@ -1,8 +1,10 @@
 // components/Modal1.js
+'use client'
 import React from 'react';
 import InputForm from './InputForm';
 
-export default function IModal1 ({ values, onInputChange })  {
+export default  function IModal1 ({ values, onInputChange })  {
+
   return (
     <div className='w3-row'>
       {/* ... Content for Modal 1 ... */}

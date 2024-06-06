@@ -13,6 +13,7 @@ import {
 } from "firebase/storage";
 import { storage } from '@/hooks/firebase';
 export default function CModal4({ values, onInputChange, onFileChange,s_email,contributorReg, onContributorRegChange}) {
+  const[isSubmit, setSubmit]= useState(false)
   const  [uploadedFiles, setUploadedFiles]  = useState({
     certPass: null,
     
@@ -36,7 +37,7 @@ export default function CModal4({ values, onInputChange, onFileChange,s_email,co
 
   const handleSubmit = async () => {
     const allFilesUploaded = Object.values(uploadedFiles).every((file) => file !== null);
-  
+    setSubmit(true)
     if (allFilesUploaded) {
       try {
             // Upload image to Firebase Storage
@@ -100,20 +101,34 @@ export default function CModal4({ values, onInputChange, onFileChange,s_email,co
           if (registerResponse.status >= 200 && registerResponse.status < 300) {
             toast.success('Contributor registered successfully');
             onContributorRegChange(true);
+            const updateResponse = await axios.put(
+              'https://termly-api.onrender.com/api/updateAccountType',
+              {
+                email: s_email,
+                accountType: 2,
+              }
+            );
+  
+            console.log('Updated account type:', updateResponse.data);
+            setSubmit(false)
             console.log('Contributor registered successfully:', registerResponse.data);
           } else {
+            setSubmit(false)
             toast.error('Error registering Contributor');
             console.error('Error registering Contributor:', registerResponse.data.message);
           }
         } else {
+          setSubmit(false)
           toast.error('Error fetching user ID');
           console.error('Error fetching user ID:', userData.message);
         }
       } catch (error) {
+        setSubmit(false)
         toast.error('Internal Server Error');
         console.error('Error:', error.message);
       }
     } else {
+      setSubmit(false)
       console.error('Please upload all required files.');
     }
   };
@@ -153,7 +168,7 @@ export default function CModal4({ values, onInputChange, onFileChange,s_email,co
       </div>
     </div>
     <div className='w3-panel w3-center'>
-       <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+       <Button variant="primary" onClick={handleSubmit}>{!isSubmit ? 'Submit' : 'Submittting...'}</Button>
     </div>
     </>
    

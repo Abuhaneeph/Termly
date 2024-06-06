@@ -3,6 +3,7 @@
   --input-padding-y: .75rem;
 }
 
+
 .form-signin {
   width: 100%;
   max-width: 420px;
@@ -112,6 +113,7 @@ a{
   #sidebar{
     display: none;
   }
+
   #donorContent{
     
      margin-left: 0px !important;
@@ -146,6 +148,9 @@ a{
 }
 #sidebar{
   display: none;
+}
+#cam_header{
+  display: block;
 }
 #donorContent{
   

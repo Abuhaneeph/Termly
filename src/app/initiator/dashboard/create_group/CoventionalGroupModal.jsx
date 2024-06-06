@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import {toast} from 'react-toastify'
-
+var sessionStorage = require('sessionstorage');
 const ConventionalGroupModal = ({ showModal, handleClose }) => {
   const [groupName, setGroupName] = useState('');
   const [groupTenor, setGroupTenor] = useState('');

@@ -4,7 +4,12 @@ import InputForm from './InputForm';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 export default function PModalOne ({ values, onInputChange,s_email })  {
+
+  const router= useRouter()
+  const[isSubmit,setSubmit]=useState(false)
   const handleSubmit = async () => {
     if (!values.Name || !values.regName || !values.email ) {
       alert("All fields are required");
@@ -12,6 +17,7 @@ export default function PModalOne ({ values, onInputChange,s_email })  {
     }
 
     try {
+      setSubmit(true)
       // Fetch user ID based on the provided email using Axios
       const response = await axios.get(`https://termly-api.onrender.com/api/user/${s_email}`);
       const userData = response.data;
@@ -44,16 +50,30 @@ export default function PModalOne ({ values, onInputChange,s_email })  {
         if (registerResponse.status >= 200 && registerResponse.status < 300) {
           toast.success('Political Body registered successfully');
           console.log('Political Body registered successfully:', registerResponse.data);
+          const updateResponse = await axios.put(
+            'https://termly-api.onrender.com/api/updateAccountType',
+            {
+              email: s_email,
+              accountType: 3,
+            }
+          );
+
+          console.log('Updated account type:', updateResponse.data);
+          setSubmit(false)
+          router.push('/dashboard/home_page');
         } else {
           toast.error('Error registering Govt Body');
+          setSubmit(false)
           console.error('Error registering Govt Body:', registerResponse.data.message);
         }
       } else {
         toast.error('Error fetching user ID');
+        setSubmit(false)
         console.error('Error fetching user ID:', userData.message);
       }
     } catch (error) {
       toast.error('Internal Server Error');
+      setSubmit(false)
       console.error('Error:', error.message);
     }
   };
@@ -106,7 +126,7 @@ export default function PModalOne ({ values, onInputChange,s_email })  {
       </div>
     </div>
     <div className='w3-panel we3-center'>
-  <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+  <Button variant="primary" onClick={handleSubmit}>{!isSubmit ? 'Submit' : 'Submitting...'}</Button>
     </div>
     </>
   );

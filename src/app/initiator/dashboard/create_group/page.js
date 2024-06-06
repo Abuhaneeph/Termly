@@ -6,6 +6,7 @@ import MLMGroup from './MLMGroup';
 import ConventionalGroupModal from './CoventionalGroupModal';
 import MLMGroupModal from './MLMGroupModal';
 import './page.css'
+var sessionStorage = require('sessionstorage');
 export default function Page() {
   const [showComponents, setShowComponents] = useState(false);
   const [showConventionalModal, setShowConventionalModal] = useState(false);
@@ -32,7 +33,7 @@ console.log(initiatorId)
 
   return (
     <>
-      <div style={{ marginLeft: '30%', overflowY: 'auto', height: '80vh', paddingBottom: '20px' }} id="donorContent">
+      <div style={{ marginLeft: '20%', overflowY: 'auto', height: '80vh', paddingBottom: '50px' }} id="donorContent">
         <div className="w3-container">
           <h1>Create Group</h1>
           <Button variant='primary' onClick={handleCreateGroupClick}>

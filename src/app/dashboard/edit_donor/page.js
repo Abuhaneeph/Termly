@@ -110,7 +110,7 @@ export default function Page (){
   const fetchDonationById = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/getDonationById/${id}`
+        `https://termly-api.onrender.com/api/getDonationById/${id}`
       );
      
       const donationData = response.data; // Adjust this based on your API response

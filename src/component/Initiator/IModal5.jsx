@@ -4,6 +4,7 @@ import React from 'react';
 import InputForm from './InputForm';
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
+var sessionStorage = require('sessionstorage');
 
 
 export default  function IModal5  ({userId, values, onInputChange , s_email})  {

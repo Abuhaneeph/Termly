@@ -85,7 +85,7 @@ export default function Page(){
       };
     return (
         <>
-            <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "20px" }} id="donorContent">
+            <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "50px" }} id="donorContent">
         <div className="w3-container">
           <h1>Campaign Details</h1>
           <img src={`${campaignData.donation_poster}`}a width={"100%"} height={"300px"}/>

@@ -12,7 +12,11 @@ import {
   list,
 } from "firebase/storage";
 import { storage } from '@/hooks/firebase';
+import { useRouter } from 'next/navigation';
 export default function Modal4({ values, onInputChange, onFileChange,s_email }) {
+  
+  const router= useRouter()
+  const[isSubmit,setSubmit]=useState(false)
   const  [uploadedFiles, setUploadedFiles]  = useState({
     certReg: null,
     certAddr: null,
@@ -36,6 +40,7 @@ export default function Modal4({ values, onInputChange, onFileChange,s_email }) 
 
   const handleSubmit = async () => {
     try {
+      setSubmit(true)
       // Check if all files are uploaded
       const allFilesUploaded = Object.values(uploadedFiles).every((file) => file !== null);
   
@@ -91,20 +96,36 @@ export default function Modal4({ values, onInputChange, onFileChange,s_email }) 
           if (registerResponse.status >= 200 && registerResponse.status < 300) {
             toast.success('NGO registered successfully');
             console.log('NGO registered successfully:', registerResponse.data);
+            const updateResponse = await axios.put(
+              'https://termly-api.onrender.com/api/updateAccountType',
+              {
+                email: s_email,
+                accountType: 3,
+              }
+            );
+  
+            console.log('Updated account type:', updateResponse.data);
+            setSubmit(false)
+            router.push('/dashboard/home_page');
+
           } else {
             toast.error('Error registering NGO');
             console.error('Error registering NGO:', registerResponse.data.message);
+            setSubmit(false)
           }
         } else {
           toast.error('Error fetching user ID');
           console.error('Error fetching user ID:', userData.message);
+          setSubmit(false)
         }
       } else {
         console.error('Please upload all required files.');
+        setSubmit(false)
       }
     } catch (error) {
       toast.error('Internal Server Error');
       console.error('Error:', error.message);
+      setSubmit(false)
     }
   };
   
@@ -116,6 +137,8 @@ export default function Modal4({ values, onInputChange, onFileChange,s_email }) 
     <>
      <div className='w3-row'>
       <div className='w3-half w3-container'>
+      <div className="form-group">
+      <label htmlFor="fileUpload2">Proof of Registration</label>
       <input
   type="file"
   className="form-control-file"
@@ -124,7 +147,7 @@ export default function Modal4({ values, onInputChange, onFileChange,s_email }) 
   accept=".png, .pdf, .jpg, .jpeg, .webp"
   onChange={(e) => handleFileChange('certReg', e)}
 />
-
+</div>
         <br></br>
 
         <div className="form-group">
@@ -161,7 +184,7 @@ export default function Modal4({ values, onInputChange, onFileChange,s_email }) 
       </div>
     </div>
     <div className='w3-panel w3-center'>
-       <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+       <Button variant="primary" onClick={handleSubmit}>{!isSubmit ? 'Submit' : 'Submitting...'}</Button>
     </div>
     </>
    

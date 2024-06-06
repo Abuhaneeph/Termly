@@ -8,6 +8,7 @@ import axios from 'axios'
 import './page.css'
 import Profile from './Profile'
 import { Button } from 'react-bootstrap'
+
 export default function Page(){
   const router = useRouter();
   const [userId, setUserId] = useState(null);
@@ -76,7 +77,7 @@ export default function Page(){
 
     return(
         <>
-         <div style={{ marginLeft: "30%", overflowY: "auto",  height: "80vh", paddingBottom: "20px" }} id="donorContent">
+         <div style={{ marginLeft: "20%", overflowY: "auto",  height: "80vh", paddingBottom: "40px" }} id="donorContent">
          <div className="container-xl px-4 mt-4">
   {/* Account page navigation*/}
   <nav className="nav nav-borders">

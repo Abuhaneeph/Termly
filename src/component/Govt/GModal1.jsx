@@ -3,8 +3,12 @@ import InputForm from './InputForm';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function GModalOne({ values, onInputChange, s_email }) {
+const[isSubmit, setSubmit]= useState(false)
+const router= useRouter();
   const handleSubmit = async () => {
     if (!values.organisation || !values.email || !values.registrationNumber || !values.briefHistory) {
       alert("All fields are required");
@@ -12,6 +16,7 @@ export default function GModalOne({ values, onInputChange, s_email }) {
     }
 
     try {
+      setSubmit(true)
       // Fetch user ID based on the provided email using Axios
       const response = await axios.get(`https://termly-api.onrender.com/api/user/${s_email}`);
       const userData = response.data;
@@ -42,18 +47,33 @@ export default function GModalOne({ values, onInputChange, s_email }) {
 
         if (registerResponse.status >= 200 && registerResponse.status < 300) {
           toast.success('GovtBody registered successfully');
+          setSubmit(false)
+          router.push('/dashboard/home_page');
           console.log('GovtBody registered successfully:', registerResponse.data);
+          // Call the API to update account type after Govt registration
+          const updateResponse = await axios.put(
+            'https://termly-api.onrender.com/api/updateAccountType',
+            {
+              email: s_email,
+              accountType: 3,
+            }
+          );
+
+          console.log('Updated account type:', updateResponse.data);
         } else {
+          setSubmit(false)
           toast.error('Error registering Govt Body');
           console.error('Error registering Govt Body:', registerResponse.data.message);
         }
       } else {
         toast.error('Error fetching user ID');
         console.error('Error fetching user ID:', userData.message);
+        setSubmit(false)
       }
     } catch (error) {
       toast.error('Internal Server Error');
       console.error('Error:', error.message);
+      setSubmit(false)
     }
   };
 
@@ -108,7 +128,7 @@ export default function GModalOne({ values, onInputChange, s_email }) {
         </div>
 
         <div className='w3-panel w3-center'>
-          <Button variant='primary' onClick={handleSubmit}>Submit</Button>
+          <Button variant='primary' onClick={handleSubmit}>{!isSubmit ? 'Submit' : 'Submitting...'}</Button>
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import './page.css'
 export default function Page() {
     return(
         <>
-        <div style={{ marginLeft: '30%', overflowY: 'auto', height: '80vh', paddingBottom: '20px' }} id="donorContent">
+        <div style={{ marginLeft: '20%', overflowY: 'auto', height: '80vh', paddingBottom: '20px' }} id="donorContent">
                   <div className="container">
   <div className="row align-items-center">
     <div className="col-md-6">

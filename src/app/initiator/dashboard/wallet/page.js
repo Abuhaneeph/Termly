@@ -1,8 +1,8 @@
 export default function Page (){
     return(
         <>
-         <div className="" id="getstarted" style={{marginLeft:"35%",marginRight:"10%",marginTop:"2%",overflowY: "auto"}}>
-           <div className="w3-center" style={{marginBottom:"60px"}} >
+          <div style={{ marginLeft: "20%", overflowY: "auto",  height: "80vh", paddingBottom: "40px" }} id="donorContent">
+           <div className="w3-center w3-margin" style={{marginBottom:"60px"}} >
             <h1>Wallet</h1>
            </div>
            <div className="w3-white w3-center " style={{borderRadius: "20px 0 20px 0"}}>

@@ -7,4 +7,5 @@ router.post('/checkUserEmailExists',userController.checkUserEmailExistsControlle
 router.post('/verifyEmail',userController.checkUserByEmailAndVerificationCode);
 router.put('/updateAccountType',userController.updateUserAccountTypeController);
 router.get('/user/:email', userController.getUserIDByEmailController);
+router.post('/loginUser',userController.loginUserController);
 module.exports = router;

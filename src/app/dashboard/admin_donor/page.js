@@ -111,14 +111,14 @@ export default function Page(){
 <>
 
 
-<div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh",paddingBottom:"20px" }} id="donorContent">
+<div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh",paddingBottom:"60px" }} id="donorContent">
   <div className="w3-container">
     <h2>Create Donation</h2>
     <form
     enctype="multipart/form-data"
                 className="form-signin"
           onSubmit={handleSubmit}
-             
+          
               >
                 <div className="form-label-group">
                   <input

@@ -110,9 +110,23 @@ const getUserIDByEmail = async (email) => {
   }
 };
 
+const getUserByEmail = async (email) => {
+  try {
+    const query = 'SELECT * FROM users WHERE email = ?';
+    const [result] = await db.execute(query, [email]);
+
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error('Error retrieving user by email:', error);
+    throw new Error('Internal Server Error');
+  }
+};
+
+
+
 
 
 module.exports = {
   createUser,checkUserEmailExists,userExistsByEmailAndVerificationCode
-  ,updateUserAccountType,getUserIDByEmail
+  ,updateUserAccountType,getUserIDByEmail,getUserByEmail
 };

@@ -16,8 +16,9 @@ import ContributorUserComponent from './ContributorUserComponent';
 import { Button } from 'react-bootstrap';
 import Initiator from '@/component/Initiator/Initiator';
 import Contributor from '@/component/Contributor/Contributor';
-
+import { useSession } from 'next-auth/react';
 export default function Page() {
+  
   const searchParams = useSearchParams();
   const [currentModal, setCurrentModal] = useState(1);
   const [selectedUserType, setSelectedUserType] = useState(null);
@@ -25,6 +26,7 @@ export default function Page() {
   const [selectedContributorType, setSelectedContributorType] = useState(null);
   const [shouldRenderInitiator, setShouldRenderInitiator] = useState(false);
   const [shouldRenderContributor, setShouldRenderContributor] = useState(false);
+
 
   const handleUserTypeChange = (userType) => {
     setSelectedUserType(userType);

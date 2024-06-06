@@ -12,7 +12,11 @@ import {
   list,
 } from "firebase/storage";
 import { storage } from '@/hooks/firebase';
+import { useRouter } from 'next/navigation';
+
 export default function IModal4({ onUserIdChange ,values, onInputChange, onFileChange,s_email,initiatorReg,onInitiatorRegChange }) {
+  const[isSubmit, setSubmit]=useState(false)
+  const router= useRouter()
   const  [uploadedFiles, setUploadedFiles]  = useState({
     certPass: null,
     
@@ -37,6 +41,7 @@ export default function IModal4({ onUserIdChange ,values, onInputChange, onFileC
   const handleSubmit = async () => {
     console.log(values);
      // Upload image to Firebase Storage
+     setSubmit(true)
      const imageRef = ref(storage, "initiators_passports/" + uploadedFiles.certPass.name);
    
   
@@ -47,6 +52,7 @@ export default function IModal4({ onUserIdChange ,values, onInputChange, onFileC
      console.log('File available at', downloadURL);
   
     try {
+   
       // Fetch user ID based on the provided email using Axios
       const response = await axios.get(`https://termly-api.onrender.com/api/user/${s_email}`);
       const userData = response.data;
@@ -98,15 +104,29 @@ export default function IModal4({ onUserIdChange ,values, onInputChange, onFileC
           toast.success('Initiator registered successfully');
           onInitiatorRegChange(true);
           console.log('Initiator registered successfully:', registerResponse.data);
+          const updateResponse = await axios.put(
+            'https://termly-api.onrender.com/api/updateAccountType',
+            {
+              email: s_email,
+              accountType: 1,
+            }
+          );
+
+          console.log('Updated account type:', updateResponse.data);
+          setSubmit(false)
+          router.push('/dashboard/home_page');
         } else {
           toast.error('Error registering Initiator');
+          setSubmit(false)
           console.error('Error registering Initiator:', registerResponse.data.message);
         }
       } else {
+        setSubmit(false)
         toast.error('Error fetching user ID');
         console.error('Error fetching user ID:', userData.message);
       }
     } catch (error) {
+      setSubmit(false)
       toast.error('Internal Server Error');
       console.log(values.certReg);
       console.error('Error:', error.message);
@@ -147,7 +167,7 @@ export default function IModal4({ onUserIdChange ,values, onInputChange, onFileC
       </div>
     </div>
     <div className='w3-panel w3-center'>
-       <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+       <Button variant="primary" onClick={handleSubmit}>{!isSubmit ? 'Submit' : 'Submitting...'}</Button>
     </div>
     </>
    
