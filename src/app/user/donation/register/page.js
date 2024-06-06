@@ -18,9 +18,7 @@ export default function Page() {
   const[isRegistering,setRegistering] = useState(false)
   const [formValues, setFormValues] = useState({
     state: '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
+    category:'',
     organization: '',
     email: '',
     password: '',
@@ -66,65 +64,65 @@ export default function Page() {
     }
     const randomDigits = generateRandomDigits();
 
- 
+
  
     const credentials = {
-      s_email: formValues.email,
-      s_password: formValues.password,
-      code: randomDigits,
-      s_state: formValues.state,
-      f_name: formValues.firstName,
-      l_name: formValues.lastName,
-      m_name: formValues.middleName,
-      s_organization: formValues.organization,
+      organisation: formValues.organization,
+      category: formValues.category,
+      state: formValues.state,
+      email: formValues.email,
+      password: formValues.password,
+      verification_code: randomDigits
     };
-   
-    try {
-      setRegistering(true);
+        
     
-      // Make the POST request to registerOrganisation endpoint
-      const response = await axios.post('https://termly-api.onrender.com/api/createUser', credentials);
-    
-      if (response.status === 200) {
-        if (response.data.success) {
-          // Registration successful
-          toast.success(response.data.message);
-    
-          // Send verification email
-          const sendEmailResponse = await axios.post('https://termly-api.onrender.com/api/sendEmail', {
-            to: formValues.email,
-            verification_code: randomDigits,
-          });
-    
-          if (sendEmailResponse.status === 200) {
-            // Email sent successfully
-            toast.info(sendEmailResponse.data.message || 'Verification email sent successfully');
-            router.push(`/user/verify-email?email=${formValues.email}`);
+        try {
+          setRegistering(true);
+        
+          // Make the POST request to registerOrganisation endpoint
+          const response = await axios.post('http://localhost:3000/api/registerOrganisation', credentials);
+        
+          if (response.status === 200) {
+            if (response.data.success) {
+              // Registration successful
+              toast.success(response.data.message);
+        
+              // Send verification email
+              const sendEmailResponse = await axios.post('http://localhost:3000/api/sendEmail', {
+                to: formValues.email,
+                verification_code: randomDigits,
+              });
+        
+              if (sendEmailResponse.status === 200) {
+                // Email sent successfully
+                toast.info(sendEmailResponse.data.message || 'Verification email sent successfully');
+              } else {
+                // Email sending failed
+                toast.error(sendEmailResponse.data.message || 'Failed to send verification email');
+              }
+        
+              // Optionally, you can redirect the user to another page or handle it as needed
+              // For example, redirect to the dashboard page
+              router.push(`/user/donation/verify-email?email=${formValues.email}`);
+            } else {
+              // Registration failed
+              toast.error(response.data.message || 'Registration failed');
+            }
           } else {
-            // Email sending failed
-            toast.error(sendEmailResponse.data.message || 'Failed to send verification email');
+            // Handle other status codes if needed
+            toast.error('Registration failed');
           }
-    
-          // Optionally, you can redirect the user to another page or handle it as needed
-          // For example, redirect to the dashboard page
-     
-        } else {
-          // Registration failed
-          toast.error(response.data.message || 'Registration failed');
+        } catch (error) {
+          console.error('Error during registration:', error);
+          toast.error('Organisation alredy registered with this email');
+        } finally {
+          setRegistering(false);
         }
-      } else {
-        // Handle other status codes if needed
-        toast.error('Registration failed');
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      toast.error('User alredy registered with this email');
-    } finally {
-      setRegistering(false);
-    }
+        
+        
     
-  
-  
+      
+    
 
   };
   
@@ -143,7 +141,7 @@ export default function Page() {
       >
         <div className="w3-row-padding ">
           <div className="w3-half w3-text-white w3-center" id="Reg">
-            <h1>Start Registration here</h1>
+            <h1>Start Donation Organisation Registration here</h1>
             <p style={{ paddingBottom: '20px' }}>
               <input
                 checked
@@ -203,43 +201,7 @@ export default function Page() {
                   />
                   <label htmlFor="inputState">State</label>
                 </div>
-                <div className="form-label-group">
-                  <input
-                    type="text"
-                    id="inputFirstName"
-                    className="form-control"
-                    onChange={handleInputChange}
-                    placeholder="First Name"
-                    name="firstName"
-                    required
-                  />
-                  <label htmlFor="inputFirstName">First Name</label>
-                </div>
-                <div className="form-label-group">
-                  <input
-                    type="text"
-                    id="inputMiddleName"
-                    onChange={handleInputChange}
-                    className="form-control"
-                    placeholder="Middle Name"
-                    name="middleName"
-                  />
-                  <label htmlFor="inputMiddleName">
-                    Middle Name (optional)
-                  </label>
-                </div>
-                <div className="form-label-group">
-                  <input
-                    type="text"
-                    id="inputLastName"
-                    onChange={handleInputChange}
-                    className="form-control"
-                    placeholder="Last Name"
-                    name="lastName"
-                    required
-                  />
-                  <label htmlFor="inputLastName">Last Name</label>
-                </div>
+               
                 <div className="form-label-group">
                   <input
                     type="text"
@@ -248,9 +210,24 @@ export default function Page() {
                     className="form-control"
                     placeholder="Organization"
                     name="organization"
+                    required
                   />
                   <label htmlFor="inputOrganization">
-                    Organization (optional)
+                    Organization 
+                  </label>
+                </div>
+                <div className="form-label-group">
+                  <input
+                    type="text"
+                    id="inputCategory"
+                    onChange={handleInputChange}
+                    className="form-control"
+                    placeholder="Category"
+                    name="category"
+                    required
+                  />
+                  <label htmlFor="inputCategory">
+                    Category 
                   </label>
                 </div>
                 <div className="form-label-group">
@@ -290,12 +267,7 @@ export default function Page() {
                   <label htmlFor="repeatPassword">Repeat Password</label>
                 </div>
 
-                <button
-                  className="btn btn-lg btn-primary btn-block"
-                  type="submit"
-                >
-                  {isRegistering ? 'Registering User...' : 'Register Now'}
-                </button>
+                
 
                 <p className="w3-panel w3-center">
                   <input
@@ -310,6 +282,13 @@ export default function Page() {
                   and conditions in the Termlys Terms and Conditions and
                   Privacy Policy.
                 </p>
+
+                <button
+                  className="btn btn-lg btn-primary btn-block"
+                  type="submit"
+                >
+                  {isRegistering ? 'Registering User...' : 'Register Now'}
+                </button>
               </form>
             </div>
           </div>

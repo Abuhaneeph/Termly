@@ -3,6 +3,7 @@
   --input-padding-y: .75rem;
 }
 
+
 .form-signin {
   width: 100%;
   max-width: 420px;
@@ -106,7 +107,22 @@ a{
  #account{
   margin-bottom: 300px ;
 }
-  
+  #verify{
+    padding-bottom: 300px;
+  }
+  #sidebar{
+    display: none;
+  }
+
+  #donorContent{
+    
+     margin-left: 0px !important;
+     
+  }
+  #getstarted{
+    margin-left: 0px !important;
+    padding-bottom: 90px;
+  }
 }
 
 
@@ -123,6 +139,30 @@ a{
 #account{
   margin-bottom: 500px ;
 }
+#verify{
+  padding-bottom: 300px;
+}
+#donorContent{
+  
+  margin-left: 90px;
+}
+#sidebar{
+  display: none;
+}
+#cam_header{
+  display: block;
+}
+#donorContent{
+  
+   margin-left: 0px !important;
+   
+}
+#getstarted{
+  margin-left: 0px !important;
+  padding-bottom: 90px;
+  
+}
+
 }
 
 
