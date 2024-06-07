@@ -76,7 +76,7 @@ export default function Page() {
                     </Link>
                    
                     <Link href={`/dashboard/edit_donor?id=${donation.donation_id}`}>
-                    <button className="btn btn-lg btn-primary btn-block">
+                    <button className="btn btn-lg btn-primary btn-block w3-margin-bottom" >
                       Edit 
                     </button>
                     </Link>

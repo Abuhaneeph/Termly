@@ -33,26 +33,34 @@ export default function Home() {
           const userId = userData.user_id;
           sessionStorage.setItem('userId', userId);
           router.push('/initiator/dashboard/Home');
+          setLogin(false)
       } else if (account_type === 'Contributor') {
         toast.success(`${message}. You are logged in as an Contributor.`);
+        setLogin(false)
       } else if (account_type === 'Organization') {
         router.push('/dashboard/home_page');
-        
+        setLogin(false)
         toast.success(`${message}. You are logged in as an Organization.`);
       } else {
         toast.success(`${message}. Account type not chosen.`);
+        router.push(`/user/accounts?email=${email}`)
+        setLogin(false)
       }
       setLogin(false)
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
+      setLogin(false)
       toast.error('User not found');
     } else if (error.response && error.response.status === 400) {
+      setLogin(false)
       toast.error('Email not verified');
-      router.push(`/user/accounts?email=${email}`);
+      router.push(`/user/verify-email?email=${email}`);
     } else if (error.response && error.response.status === 401) {
+      setLogin(false)
       toast.error('Invalid password');
     } else {
+      setLogin(false)
       toast.error('Internal Server Error');
     }
   }
