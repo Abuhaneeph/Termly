@@ -1,7 +1,12 @@
+import NavWrapper from "../component/NavWrapper"
 export default function Page (){
     return(
         <>
-          <div style={{ marginLeft: "20%", overflowY: "auto",  height: "80vh", paddingBottom: "40px" }} id="donorContent">
+                   <div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
            <div className="w3-center w3-margin" style={{marginBottom:"60px"}} >
             <h1>Wallet</h1>
            </div>
@@ -37,6 +42,9 @@ export default function Page (){
 
            </div>
          </div>
+         </div>
+         </div>
+         
         
         </>
     )

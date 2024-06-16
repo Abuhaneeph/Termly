@@ -86,3 +86,12 @@
 45deg
  , #ffdf40, #ff8359)!important;
 }
+
+
+
+.custom-class {
+    /* Add your custom styles here */
+    border: 2px solid red; /* Example: Add a red border */
+    background-color: lightyellow; /* Example: Change the background color */
+    font-size: larger;
+  }

@@ -1,7 +1,7 @@
 'use client'
 import  { useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import NavWrapper from '../component/Header/NavWrapper';
 
 export default function Page() {
   const [donations, setDonations] = useState([]);
@@ -50,7 +50,11 @@ export default function Page() {
 
   return (
     <>
-      <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "100px" }} id="donorContent">
+<div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
         <div className="w3-container">
           <h1>Campaigns</h1>
           <p>All donations made to campaigns are sent directly to the campaign</p>
@@ -94,6 +98,8 @@ export default function Page() {
           ))}
         </div>
         <p>Total Donations: {totalDonations}</p>
+      </div>
+      </div>
       </div>
     </>
   );

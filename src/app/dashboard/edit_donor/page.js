@@ -3,6 +3,7 @@ import { useState ,useEffect} from "react";
 import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import NavWrapper from "../component/Header/NavWrapper";
 import {
   ref,
   uploadBytesResumable,
@@ -143,7 +144,11 @@ export default function Page (){
 <>
 
 
-<div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh",paddingBottom:"20px" }} id="donorContent">
+<div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
   <div className="w3-container">
     <h2>Edit Donation {id} </h2>
    
@@ -266,7 +271,8 @@ export default function Page (){
               </form>
   </div>
 </div>
-
+</div>
+</div>
 </>
 
 </>

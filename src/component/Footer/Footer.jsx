@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <>
         <div class="w3-bottom">
-        <div className="w3-center w3-black" style={{maeginTop:"100px"}}>
+        <div className="w3-center w3-black" >
   <div class="w3-bar">
     
     <a href="#" class="w3-bar-item w3-button  ">Careers</a>

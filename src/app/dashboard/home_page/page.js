@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
+import NavWrapper from '../component/Header/NavWrapper';
 
 const PieChart = dynamic(() => import('./PieChart'), { ssr: false });
 const BarChart = dynamic(() => import('./BarChart'), { ssr: false });
@@ -36,13 +37,19 @@ export default function Page() {
 
   return (
     <>
-      <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "20px" }} id="donorContent">
+
+<div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
+      <div className='w3-container'>
         <div className="w3-row-padding ">
-          <div className="w3-half w3-center w3-padding  w3-container">
+          <div className="w3-third w3-center w3-padding  w3-container">
             <PieChart />
           </div>
 
-          <div className="w3-half  w3-center w3-container">
+          <div className="w3-twothird  w3-center w3-container">
             <BarChart />
           </div>
         </div>
@@ -70,6 +77,9 @@ export default function Page() {
             <h1>REMITTED</h1>
           </div>
         </div>
+      </div>
+      </div>
+      </div>
       </div>
     </>
   );

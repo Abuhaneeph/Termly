@@ -8,6 +8,7 @@ import axios from 'axios'
 import './page.css'
 import Profile from './Profile'
 import { Button } from 'react-bootstrap'
+import NavWrapper from '../component/NavWrapper'
 
 export default function Page(){
   const router = useRouter();
@@ -77,7 +78,11 @@ export default function Page(){
 
     return(
         <>
-         <div style={{ marginLeft: "20%", overflowY: "auto",  height: "80vh", paddingBottom: "40px" }} id="donorContent">
+               <div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
          <div className="container-xl px-4 mt-4">
   {/* Account page navigation*/}
   <nav className="nav nav-borders">
@@ -109,7 +114,9 @@ export default function Page(){
   </div>
 </div>
   
+  </div>
          </div>
+  </div>
     </>
     )
 }

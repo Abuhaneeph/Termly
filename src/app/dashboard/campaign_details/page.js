@@ -4,6 +4,7 @@ import { useState,useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { usePaystackPayment } from 'react-paystack';
+import NavWrapper from "../component/Header/NavWrapper";
 export default function Page(){
   
     const searchParams = useSearchParams()
@@ -85,7 +86,11 @@ export default function Page(){
       };
     return (
         <>
-            <div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh", paddingBottom: "50px" }} id="donorContent">
+          <div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">  
         <div className="w3-container">
           <h1>Campaign Details</h1>
           <img src={`${campaignData.donation_poster}`}a width={"100%"} height={"300px"}/>
@@ -147,8 +152,10 @@ export default function Page(){
 
                    
         </div>
-
-        </div>
+</div>
+</div>
+</div>
+        
         
         </>
     )

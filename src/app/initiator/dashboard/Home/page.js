@@ -2,6 +2,7 @@
 import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import NavWrapper from "../component/NavWrapper";
 var sessionStorage = require('sessionstorage');
 
 import DateTimeComponent from "../component/Header/DateTimeComponent"
@@ -51,7 +52,11 @@ export default function Page (){
 
   return (
     <>
-     <div style={{ marginLeft: "20%", overflowY: "auto",  height: "80vh", paddingBottom: "70px" }} id="donorContent">
+          <div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
         <div className="w3-container w3-center">
           <div className="w3-row-padding w3-center">
             <div className="w3-col l4 m6 s12 w3-bold   w3-margin-top w3-mobile  w3-pale-blue w3-center">
@@ -98,6 +103,9 @@ export default function Page (){
           </div>
         </div>
       </div>
+      </div>
+      </div>
+
     </>
   );
 }

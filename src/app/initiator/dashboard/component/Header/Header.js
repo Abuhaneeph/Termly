@@ -26,10 +26,7 @@ export default function Header ({ openSidebar }){
  Log out
  
 </div>  
-<div className="w3-bar-item w3-button w3-right w3-mobile" onClick={openSidebar}>
- Menu
- 
-</div>             
+            
         </div>
        <div className="w3-bar w3-blue  w3-hide-small">
   <div href="#" className="w3-bar-item w3-left w3-button w3-mobile ">

@@ -73,7 +73,7 @@ const BankDetails = ({    initiatorData}) => (
        
         
         {/* Save changes button*/}
-        <button className="btn btn-primary" type="button">
+        <button className="btn btn-primary" type="button" style={{marginBottom:"15px"}}>
           Save changes
         </button>
       </form>

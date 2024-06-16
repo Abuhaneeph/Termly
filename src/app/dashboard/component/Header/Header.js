@@ -2,7 +2,7 @@
 import { useEffect,useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-export default function Header ({openCamSidebar}){
+export default function Header ({toggleMobileNav}){
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const router= useRouter()
@@ -57,8 +57,8 @@ Log Out
   <div href="#" className="w3-bar-item w3-right w3-hide-small w3-button w3-mobile">
   <i class="fa fa-calendar"></i>  {currentDate && currentDate}
   </div>
-  <div href="#" className="w3-bar-item w3-right w3-hide-large w3-hide-medium w3-button w3-mobile" onClick={openCamSidebar}>
-Menu
+  <div  className="w3-bar-item w3-right w3-hide-large w3-hide-medium w3-button w3-mobile">
+ 
   </div>
 
 

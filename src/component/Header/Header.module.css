@@ -25,6 +25,7 @@
 
 .right {
   order: 3;
+  text-align: center;
 }
 
 .search-input {
@@ -53,6 +54,12 @@
 /* Small screens (e.g., smartphones) */
 @media only screen and (max-width: 480px) {
   .search-input {
-   width:90px;
+   width:70px;
+   margin-left: 8px;
   }
+  .left .right{
+    font-size:0.5px !important;
+  }
+
+
 }

@@ -12,8 +12,10 @@ export default function Page() {
   const EmailAddress = searchParams.get('email')
   
   const [verificationCode, setVerificationCode] = useState('');
+   
+  const [isVerify, setVerify]= useState(false)
 
-  const handleSubmit = async(e) => {
+   const handleSubmit = async(e) => {
     e.preventDefault();
     if (verificationCode.length !== 6) {
       toast.error('Verification code must be six digits');
@@ -21,6 +23,7 @@ export default function Page() {
     }
 
     try {
+      setVerify(true)
       // Call the /verifyEmail API with Axios
       const response = await axios.post('https://termly-api.onrender.com/api/verifyEmail', {
         email: EmailAddress,
@@ -30,15 +33,19 @@ export default function Page() {
      // Check the response success property
 if (response.data.success) {
   // Email verification successful
+  setVerify(false)
   toast.success(response.data.message);
   router.push(`/user/accounts?email=${EmailAddress}`);
 } else {
   // Email verification failed
+  setVerify(false)
   toast.error(response.data.message);
  
+
 } 
     } catch (error) {
       // Handle API error
+      setVerify(false)
       console.error('Error verifying email:', error);
       toast.error('Error verifying email');
     }
@@ -51,8 +58,8 @@ if (response.data.success) {
 
         <>
         
-          <div className="w3-container w3-center" id="verify" style={{paddingTop:"40px",width:"450px",margin:"0 auto",display:"block"}}>
-          <div className='w3-card-4 w3-white' style={{borderRadius:"40px 0 40px 0"}}>
+         
+        <div className='w3-card-4 w3-white' style={{borderRadius:"40px 0 40px 0", margin: "70px"}}>
         
     <form className="form-signin" onSubmit={handleSubmit}>
   
@@ -73,12 +80,12 @@ if (response.data.success) {
                 onChange={(e) => setVerificationCode(e.target.value)}
                 required
               />
-    <label htmlFor="inputVerificationCode">Enter your Verification Code</label>
+    <label htmlFor="inputVerificationCode">Verification Code</label>
   </div>
 
 
   <button className="btn btn-lg btn-primary btn-block" type="submit">
-    Submit Now
+    {!isVerify ? 'Verify E-mail' : 'Verifying E-mail...'}
   </button>
  
  
@@ -86,7 +93,7 @@ if (response.data.success) {
  
 </form>
 </div>
-          </div>
+       
         </>
     )
 }

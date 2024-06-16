@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import NavWrapper from "../component/NavWrapper";
 var sessionStorage = require('sessionstorage');
 export default function Page(){
+  const [isPost, setPost] = useState(false)
     const initiatorId= sessionStorage.getItem('initiatorID')
   const [formValues, setFormValues] = useState({
 
@@ -28,7 +30,7 @@ export default function Page(){
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+  setPost(true)
   
   
     try {
@@ -44,6 +46,7 @@ export default function Page(){
       // Check the response status
       if (response.status === 201) {
         // If successful, show a success toast
+        setPost(false)
         toast.success("Announcement created successfully!");
         // Optionally, you can reset the form after successful submission
         setFormValues({
@@ -52,10 +55,12 @@ export default function Page(){
           about: '',
         });
       } else {
+        setPost(false)
         // If the response status is not 201, show an error toast
         toast.error("Failed to create announcement. Please try again.");
       }
     } catch (error) {
+      setPost(false)
       console.error('API Error:', error);
       // Show an error toast if there is an issue with the API call
       toast.error("An error occurred. Please try again later.");
@@ -70,9 +75,14 @@ export default function Page(){
 <>
 
 
-<div style={{ marginLeft: "20%", overflowY: "auto", height: "80vh",paddingBottom:"20px" }} id="donorContent">
+<div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
   <div className="w3-container">
-    <h2>Create Donation</h2>
+    
+    <h2>Create Annoucement</h2>
     <form
     enctype="multipart/form-data"
                 className="form-signin"
@@ -130,7 +140,7 @@ export default function Page(){
                   className="btn btn-lg btn-primary btn-block"
                   type="submit"
                 >
-                 Post
+                {!isPost  ? 'Post' : 'Creating Post...'}
                 </button>
                 
 
@@ -138,7 +148,8 @@ export default function Page(){
               </form>
   </div>
 </div>
-
+</div>
+</div>
 </>
 
 </>

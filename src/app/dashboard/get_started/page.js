@@ -1,7 +1,13 @@
+import NavWrapper from "../component/Header/NavWrapper"
 export default function Page(){
     return(
         <>
-      <div className="" id="getstarted" style={{marginLeft:"35%",marginRight:"10%",marginTop:"2%",overflowY: "auto"}}>
+        <div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
+     <div className="w3-container">
         <div className="w3-row-padding">
         <div className="w3-half w3-center  w3-container">
           <img src="../../about.jpg" width="200px"/> 
@@ -39,6 +45,9 @@ export default function Page(){
       </div>
           </div>
       </div>
+      </div>
+    </div>
+    </div>
         </>
     )
 }

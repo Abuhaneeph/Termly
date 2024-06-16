@@ -15,6 +15,7 @@ const initiatorRoutes= require('./initiatorsRoutes')
 const contributorRoutes= require('./contributorsRoutes')
 const groupRoutes= require('./groupRoutes')
 const annouceRoutes= require('./annouceRoutes')
+const forgotPasswordRoutes= require('./forgotPasswordRoutes')
 router.use('/api', userRoutes);
 router.use('/api', emailRoutes);
 router.use('/api', donationRoutes);
@@ -29,5 +30,5 @@ router.use('/api',initiatorRoutes)
 router.use('/api',contributorRoutes)
 router.use('/api',groupRoutes)
 router.use('/api',annouceRoutes)
-
+router.use('/api',forgotPasswordRoutes)
 module.exports = router;

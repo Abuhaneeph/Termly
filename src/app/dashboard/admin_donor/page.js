@@ -11,6 +11,7 @@ import {
   list,
 } from "firebase/storage";
 import { storage } from "@/hooks/firebase";
+import NavWrapper from "../component/Header/NavWrapper";
 export default function Page(){
   const [formValues, setFormValues] = useState({
     donation_poster: null,
@@ -111,7 +112,11 @@ export default function Page(){
 <>
 
 
-<div style={{ marginLeft: "30%", overflowY: "auto", height: "80vh",paddingBottom:"60px" }} id="donorContent">
+<div id="wrapper">
+<NavWrapper/>
+
+      <div id="page-wrapper">
+        <div id="page-inner">
   <div className="w3-container">
     <h2>Create Donation</h2>
     <form
@@ -233,7 +238,8 @@ export default function Page(){
               </form>
   </div>
 </div>
-
+</div>
+</div>
 </>
 
 </>

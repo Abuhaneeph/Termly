@@ -108,7 +108,7 @@ export default function Home() {
                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}>
                   {!isLogin ? 'Login in' : 'Login the User .....'}
                 </button>
-            {/* <a href="#" className='w3-right'>Forgot Password</a> */}    
+           <a href="/user/forgot-password" className='w3-right'>Forgot Password</a>   
                 <p className='mt-5 mb-3 w3-center'>Don&apos;t have an account</p>
                 <Link href="/user/register">
                   <button className="btn btn-lg btn-primary btn-block" type="submit">
